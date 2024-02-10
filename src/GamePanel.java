@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +21,12 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		public static BufferedImage image;
 		public static boolean needImage = true;
 		public static boolean gotImage = false;
+	   Font titleFont = new Font("Arial", Font.PLAIN, 48);
+	   Font startFont = new Font("Arial", Font.PLAIN, 30);
 	GamePanel(){
 		p = new Player();
 		frameDraw = new Timer(1000/60, this);
+		frameDraw.start();
 		if(needImage) {
 			loadImage("background.png");
 		}
@@ -39,11 +44,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		if(gotImage) {
 			g.drawImage(image, 0, 0, 800,500,null);
 		}
+		g.setFont(titleFont);
+		g.setColor(Color.YELLOW);
+		g.drawString("MarioDupe", 250, 150);
+		g.setFont(startFont);
+		g.setColor(Color.yellow);
+		g.drawString("Press Enter to Start", 250, 250);
 	}
 	void drawGameState(Graphics g) {
-		
+		if(gotImage) {
+			g.drawImage(image, 0, 0, 800,500,null);
+		}
 	}
 	void drawEndState(Graphics g) {
+		g.setColor(Color.RED);
+		g.fillRect(0, 0, MarioDupe.WIDTH, MarioDupe.HEIGHT);
 		
 	}
 	void loadImage(String imageFile) {
@@ -58,22 +73,28 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		}
 	}
 	@Override
-	public void keyPressed(KeyEvent arg0) {
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+		    if (currentState == END) {
+		        currentState = MENU;
+		    } else {
+		        currentState++;
+		    }
+		}   
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public void keyReleased(KeyEvent arg0) {
+	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(currentState == MENU){
 			updateMenuState();
@@ -83,6 +104,18 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 			updateEndState();
 		}
 		repaint();
+	}
+	@Override
+	public void paintComponent(Graphics g){
+		if(currentState == MENU) {
+			drawMenuState(g);
+		}
+		else if(currentState == GAME) {
+			drawGameState(g);
+		}
+		else if(currentState == END) {
+			drawEndState(g);
+		}
 	}
 	}
 	
