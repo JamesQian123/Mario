@@ -23,8 +23,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		public static boolean gotImage = false;
 	   Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	   Font startFont = new Font("Arial", Font.PLAIN, 30);
+	   Font endFont = new Font("Arial", Font.PLAIN, 50);
 	GamePanel(){
-		p = new Player();
+		p = new Player(150,200,50,50);
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
 		if(needImage) {
@@ -35,7 +36,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		
 	}
 	void updateGameState() {
-		
+		p.updatePos();
 	}
 	void updateEndState() {
 		
@@ -55,10 +56,15 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		if(gotImage) {
 			g.drawImage(image, 0, 0, 800,500,null);
 		}
+		
+		p.draw(g);
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillRect(0, 0, MarioDupe.WIDTH, MarioDupe.HEIGHT);
+		g.setColor(Color.BLACK);
+		g.drawString("womp womp, game over", 300, 250);
+		
 		
 	}
 	void loadImage(String imageFile) {
@@ -81,13 +87,55 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		    } else {
 		        currentState++;
 		    }
-		}   
+		}
+		if(currentState == GAME) {
+			if(e.getKeyCode()==KeyEvent.VK_UP) {
+				if(p.y > 0) {
+					
+					p.isMovingUp = true;
+				}
+			}
+			
+			else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+				System.out.println("RIGHT");
+				if(p.x < MarioDupe.WIDTH-50) {
+					//ship.right();
+					p.isMovingRight = true;
+				}
+
+
+			}
+			else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+				System.out.println("LEFT");
+				if(p.x > 0) {
+					//ship.left();
+					p.isMovingLeft = true;
+				}
+
+			}
+
+		}
+		
+
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getKeyCode()==KeyEvent.VK_UP) {
+			p.isMovingUp = false;
+
+		}
+		else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
+			p.isMovingDown = false;
+		}
+		else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
+			p.isMovingRight = false;
+		}
+		else if (e.getKeyCode()==KeyEvent.VK_LEFT) {
+			p.isMovingLeft = false;
+		}
 	}
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
