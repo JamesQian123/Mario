@@ -90,10 +90,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		}
 		if(currentState == GAME) {
 			if(e.getKeyCode()==KeyEvent.VK_UP) {
-				if(p.y > 0) {
-					
-					p.isMovingUp = true;
-				}
+				p.isMovingUp = true;
 			}
 			
 			else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
@@ -121,12 +118,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+	
 		if (e.getKeyCode()==KeyEvent.VK_UP) {
 			p.isMovingUp = false;
-
-		}
-		else if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-			p.isMovingDown = false;
 		}
 		else if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
 			p.isMovingRight = false;

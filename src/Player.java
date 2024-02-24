@@ -7,10 +7,10 @@ public class Player extends GameObject{
 	boolean isMovingRight = false;
 	boolean isMovingLeft = false;
 	int gravity = 1;
-	int yVelocty = 0;
+	int yVelocity = 0;
 	int jumpPower = 20;
 	
-	int yLimit = 500;
+	int yLimit = 300;
 
 	boolean canJump = false;
 	
@@ -22,6 +22,15 @@ public class Player extends GameObject{
         g.fillRect(x, y, width, height);
         speed = 5;
 	}
+	
+	public void jump(){
+		if(canJump){
+			yVelocity -= jumpPower;
+			canJump = false;
+		}
+	}
+	
+	
 	public void right() {
         x+=speed;
     }
@@ -35,7 +44,9 @@ public class Player extends GameObject{
         y+=speed;
     }
 	void updatePos() {
-		if(isMovingUp && y > 0) {
+		if(isMovingUp && y > 0 && canJump) {
+			//canJump = true;
+			isMovingUp = false;
 			up();
 		}
 		if(isMovingDown && y < MarioDupe.HEIGHT-width) {
@@ -47,13 +58,14 @@ public class Player extends GameObject{
 		if(isMovingLeft && x > 0) {
 			left();
 		}
-		
+		yVelocity += gravity;
+		y += yVelocity;
+		if(y >= yLimit) {
+			y = yLimit;
+			yVelocity = 0;
+			canJump = true;
+		}
 		super.update();
 	}
-	public void jump(){
-		if(canJump){
-			yVelocty -= jumpPower;
-			canJump = false;
-		}
-	}
+	
 }
