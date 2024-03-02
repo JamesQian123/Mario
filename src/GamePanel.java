@@ -24,6 +24,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	   Font titleFont = new Font("Arial", Font.PLAIN, 48);
 	   Font startFont = new Font("Arial", Font.PLAIN, 30);
 	   Font endFont = new Font("Arial", Font.PLAIN, 50);
+	   ObjectManager object = new ObjectManager(p);
+	   Timer platformSpawn;
+	  
 	GamePanel(){
 		p = new Player(150,200,50,50);
 		frameDraw = new Timer(1000/60, this);
@@ -37,6 +40,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	}
 	void updateGameState() {
 		p.updatePos();
+		object.update();
 	}
 	void updateEndState() {
 		
@@ -83,9 +87,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
+		    	platformSpawn.stop();
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		    }
+		    if(currentState == GAME) {
+		    	startGame();
 		    }
 		}
 		if(currentState == GAME) {
@@ -114,6 +122,10 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		}
 		
 
+	}
+	void startGame(){
+		platformSpawn = new Timer(1000/60, object);
+		platformSpawn.start();
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {

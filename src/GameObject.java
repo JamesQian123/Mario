@@ -5,7 +5,7 @@ int y;
 int width;
 int height;
 int speed;
-int isActive;
+boolean isActive;
 GameObject(int x, int y, int height, int width){
 	this.x = x;
 	this.y = y;
