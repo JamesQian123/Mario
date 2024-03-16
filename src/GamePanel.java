@@ -60,8 +60,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		if(gotImage) {
 			g.drawImage(image, 0, 0, 800,500,null);
 		}
-		
-		p.draw(g);
+		object.draw(g);
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -87,14 +86,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		// TODO Auto-generated method stub
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
-		    	platformSpawn.stop();
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		        if(currentState == GAME) {
+			    	startGame();
+			    }
 		    }
-		    if(currentState == GAME) {
-		    	startGame();
-		    }
+		    
 		}
 		if(currentState == GAME) {
 			if(e.getKeyCode()==KeyEvent.VK_UP) {
@@ -117,6 +116,9 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 					p.isMovingLeft = true;
 				}
 
+			}
+			if(currentState == END) {
+				platformSpawn.stop();
 			}
 
 		}
