@@ -16,7 +16,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	final int GAME = 1;
 	final int END = 2;
 	int currentState = MENU;
-		Player p;
+		Player p = new Player(150,200,50,50);
 		Timer frameDraw;
 		public static BufferedImage image;
 		public static boolean needImage = true;
@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	   Timer platformSpawn;
 	  
 	GamePanel(){
-		p = new Player(150,200,50,50);
+		//p = new Player(150,200,50,50);
 		frameDraw = new Timer(1000/60, this);
 		frameDraw.start();
 		if(needImage) {
@@ -60,6 +60,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		if(gotImage) {
 			g.drawImage(image, 0, 0, 800,500,null);
 		}
+		//object.addPlatform();
 		object.draw(g);
 	}
 	void drawEndState(Graphics g) {

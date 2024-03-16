@@ -20,7 +20,7 @@ public class Player extends GameObject{
 	void draw(Graphics g) {
 		g.setColor(Color.BLUE);
         g.fillRect(x, y, width, height);
-        speed = 5;
+        //speed = 5;
 	}
 	
 	public void jump(){
