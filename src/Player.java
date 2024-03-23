@@ -16,6 +16,7 @@ public class Player extends GameObject{
 	
 	Player(int x, int y, int height, int width){
 		super(x,y,height,width);
+		speed = 5;
 	}
 	void draw(Graphics g) {
 		g.setColor(Color.BLUE);

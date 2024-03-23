@@ -90,13 +90,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		        currentState = MENU;
 		    } else {
 		        currentState++;
-		        if(currentState == GAME) {
-			    	startGame();
-			    }
+//		        if(currentState == GAME) {
+//			    	startGame();
+//			    }
 		    }
 		    
 		}
 		if(currentState == GAME) {
+			startGame();
 			if(e.getKeyCode()==KeyEvent.VK_UP) {
 				p.isMovingUp = true;
 			}
@@ -127,7 +128,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 
 	}
 	void startGame(){
-		platformSpawn = new Timer(1000/60, object);
+		platformSpawn = new Timer(10000, object);
 		platformSpawn.start();
 	}
 	@Override

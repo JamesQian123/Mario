@@ -7,42 +7,42 @@ import java.util.Random;
 public class ObjectManager implements ActionListener{
 	Player p;
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
-	Random rand;
+	Random rand = new Random();
 	ObjectManager(Player p){
 		this.p = p;
 	}
-//	void addPlatform(){
-//		platforms.add(new Platform(rand.nextInt(MarioDupe.WIDTH),0,100,25));
-//	}
+
 	void addPlatform() {
-		platforms.add(new Platform(rand.nextInt(MarioDupe.WIDTH),0,100,25));
+		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(51)+160,100,25));
 	}
 	void update() {
-//		for(Platform p: platforms) {
-//			p.update();
-//			if(p.x <= MarioDupe.WIDTH) {
-//				p.isActive = false;
-//			}
-//		}
+		for(Platform plat: platforms) {
+			plat.update();
+			if(plat.x <= -plat.width) { /// Fix this. 
+				p.isActive = false;
+			}
+		}
 	}
 	void draw(Graphics g) {
 		p.draw(g);
-//		for(Platform p:platforms) {
-//			
-//			p.draw(g);
-//		}
+		for(Platform plat: platforms) {
+			plat.draw(g);
+		}
 	}
 	void purgeObjects() {
-//		for(int i = 0; i < platforms.size(); i++) {
-//			if(!platforms.get(i).isActive) {
-//				platforms.remove(i);
-//			}
-//		}
+		for(int i  = 0; i < platforms.size(); i++) {
+			if(!platforms.get(i).isActive) {
+				platforms.remove(i);
+			}
+		}
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-//		addPlatform();
+		addPlatform();
+		System.out.println(platforms.size());
+		purgeObjects();
 	}
+	
 
 }
