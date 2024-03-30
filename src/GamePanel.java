@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		
 	}
 	void updateGameState() {
-		p.updatePos();
+		
 		object.update();
 	}
 	void updateEndState() {
@@ -90,14 +90,14 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		        currentState = MENU;
 		    } else {
 		        currentState++;
-//		        if(currentState == GAME) {
-//			    	startGame();
-//			    }
+		        if(currentState == GAME) {
+			    	startGame();
+			    }
 		    }
 		    
 		}
 		if(currentState == GAME) {
-			startGame();
+			
 			if(e.getKeyCode()==KeyEvent.VK_UP) {
 				p.isMovingUp = true;
 			}
@@ -119,16 +119,20 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 				}
 
 			}
-			if(currentState == END) {
-				platformSpawn.stop();
+			if(p.y == 300  && p.firstPlatform) {
+				currentState = END;
 			}
 
+		}
+		if(currentState == END) {
+			platformSpawn.stop();
 		}
 		
 
 	}
 	void startGame(){
-		platformSpawn = new Timer(10000, object);
+		platformSpawn = new Timer(5000, object);
+		platformSpawn.setInitialDelay(1000);
 		platformSpawn.start();
 	}
 	@Override

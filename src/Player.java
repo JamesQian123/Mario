@@ -13,7 +13,7 @@ public class Player extends GameObject{
 	int yLimit = 300;
 
 	boolean canJump = false;
-	
+	boolean firstPlatform = false;
 	Player(int x, int y, int height, int width){
 		super(x,y,height,width);
 		speed = 5;
@@ -34,17 +34,24 @@ public class Player extends GameObject{
 	
 	public void right() {
         x+=speed;
+        
     }
 	public void left() {
         x-=speed;
+        
     }
 	public void up() {
         jump();
+       
     }
 	public void down() {
         y+=speed;
+      
     }
 	void updatePos() {
+		if(yLimit < 300) {
+			x-=2;
+		}
 		if(isMovingUp && y > 0 && canJump) {
 			//canJump = true;
 			isMovingUp = false;

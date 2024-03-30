@@ -13,15 +13,19 @@ public class ObjectManager implements ActionListener{
 	}
 
 	void addPlatform() {
-		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(51)+160,100,25));
+		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(51)+160,25,100));
 	}
 	void update() {
+		
 		for(Platform plat: platforms) {
 			plat.update();
 			if(plat.x <= -plat.width) { /// Fix this. 
 				p.isActive = false;
 			}
+			
 		}
+		p.updatePos();
+		checkCollisions();
 	}
 	void draw(Graphics g) {
 		p.draw(g);
@@ -43,6 +47,26 @@ public class ObjectManager implements ActionListener{
 		System.out.println(platforms.size());
 		purgeObjects();
 	}
+	public void checkCollisions() {
+		for(Platform plat: platforms) {
+			if(p.collisionBox.intersects(plat.collisionBox) ) {
+				handleCollisions(plat);
+				return;
+				
+			}
+			p.yLimit = 300;
+		}
+	}
+	public void handleCollisions(Platform plat) {
+		if(p.yVelocity >= 0 && p.y + p.height < plat.y + plat.height){
+			p.yLimit=(plat.y - p.height);
+			if(!p.firstPlatform) {
+				p.firstPlatform = true;
+			}
+		}else{
+			p.yLimit=(300);
+		}
 	
+	}
+	}
 
-}
