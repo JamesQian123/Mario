@@ -13,7 +13,7 @@ GameObject(int x, int y, int height, int width){
 	this.y = y;
 	this.height = height;
 	this.width = width;
-	
+	isActive = true;
 	collisionBox = new Rectangle();
 	collisionBox.setBounds(x,y,width,height);
 }

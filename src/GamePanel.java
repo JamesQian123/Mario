@@ -26,7 +26,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	   Font endFont = new Font("Arial", Font.PLAIN, 50);
 	   ObjectManager object = new ObjectManager(p);
 	   Timer platformSpawn;
-	  
+	Timer timeAlive;
+	int time;
 	GamePanel(){
 		//p = new Player(150,200,50,50);
 		frameDraw = new Timer(1000/60, this);
@@ -41,6 +42,13 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	void updateGameState() {
 		
 		object.update();
+		if(p.y == 300  && p.firstPlatform) {
+			currentState = END;
+		}
+		if(!p.isActive) {
+			currentState = END;
+		}
+
 	}
 	void updateEndState() {
 		
@@ -62,6 +70,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		}
 		//object.addPlatform();
 		object.draw(g);
+		g.drawString("Time Alive: " + String.valueOf(time), 50, 50);
 	}
 	void drawEndState(Graphics g) {
 		g.setColor(Color.RED);
@@ -88,12 +97,17 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
+		        p = new Player(250,750,50,50);
+				object = new ObjectManager(p);
+				timeAlive = new Timer(1000, this);
 		    } else {
 		        currentState++;
+		     
 		        if(currentState == GAME) {
 			    	startGame();
 			    }
 		    }
+		    
 		    
 		}
 		if(currentState == GAME) {
@@ -119,10 +133,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 				}
 
 			}
-			if(p.y == 300  && p.firstPlatform) {
-				currentState = END;
-			}
-
+			
 		}
 		if(currentState == END) {
 			platformSpawn.stop();
@@ -131,9 +142,11 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 
 	}
 	void startGame(){
-		platformSpawn = new Timer(5000, object);
+		platformSpawn = new Timer(1000, object);
 		platformSpawn.setInitialDelay(1000);
 		platformSpawn.start();
+		timeAlive = new Timer(1000, this);
+		timeAlive.start();
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -157,15 +170,21 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		if(currentState == MENU){
-			updateMenuState();
-		}else if(currentState == GAME){
-			updateGameState();
-		}else if(currentState == END){
-			updateEndState();
+		if(e.getSource() == frameDraw){// TODO Auto-generated method stub
+			if(currentState == MENU){
+				updateMenuState();
+			}else if(currentState == GAME){
+				updateGameState();
+			}else if(currentState == END){
+				updateEndState();
+			}
+			repaint();
+	}
+		if(e.getSource() == timeAlive) {
+			if(currentState == GAME) {
+				time += 1;
+			}
 		}
-		repaint();
 	}
 	@Override
 	public void paintComponent(Graphics g){

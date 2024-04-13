@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class ObjectManager implements ActionListener{
 	Player p;
+
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	Random rand = new Random();
 	ObjectManager(Player p){
@@ -13,14 +14,17 @@ public class ObjectManager implements ActionListener{
 	}
 
 	void addPlatform() {
-		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(51)+160,25,100));
+		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(150)+100,25,100));
 	}
 	void update() {
 		
 		for(Platform plat: platforms) {
 			plat.update();
 			if(plat.x <= -plat.width) { /// Fix this. 
-				p.isActive = false;
+				plat.isActive = false;
+				if(!plat.landed) {
+					p.isActive = false;
+				}
 			}
 			
 		}
@@ -63,6 +67,7 @@ public class ObjectManager implements ActionListener{
 			if(!p.firstPlatform) {
 				p.firstPlatform = true;
 			}
+			plat.landed = true;
 		}else{
 			p.yLimit=(300);
 		}

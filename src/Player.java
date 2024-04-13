@@ -50,7 +50,7 @@ public class Player extends GameObject{
     }
 	void updatePos() {
 		if(yLimit < 300) {
-			x-=2;
+			x-=12;
 		}
 		if(isMovingUp && y > 0 && canJump) {
 			//canJump = true;

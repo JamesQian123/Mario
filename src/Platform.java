@@ -4,12 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Platform extends GameObject{
-
+	boolean landed = false;
 	Platform(int x, int y, int height, int width) {
 		super(x, y, height, width);
 		// TODO Auto-generated constructor stub
-		speed = 1;
+		speed = 6;
 		isActive = true;
+		
 	}
 	void update() {
 		x -= speed;
