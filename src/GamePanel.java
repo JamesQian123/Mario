@@ -70,6 +70,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		}
 		//object.addPlatform();
 		object.draw(g);
+		g.setColor(Color.black);
 		g.drawString("Time Alive: " + String.valueOf(time), 50, 50);
 	}
 	void drawEndState(Graphics g) {
@@ -77,6 +78,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		g.fillRect(0, 0, MarioDupe.WIDTH, MarioDupe.HEIGHT);
 		g.setColor(Color.BLACK);
 		g.drawString("womp womp, game over", 300, 250);
+		g.drawString("your score is: " + time, 300, 350);
 		
 		
 	}
@@ -100,6 +102,7 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 		        p = new Player(250,750,50,50);
 				object = new ObjectManager(p);
 				timeAlive = new Timer(1000, this);
+				time = 0;
 		    } else {
 		        currentState++;
 		     
@@ -184,6 +187,8 @@ public class GamePanel extends JPanel implements KeyListener, ActionListener{
 			if(currentState == GAME) {
 				time += 1;
 			}
+			
+			
 		}
 	}
 	@Override

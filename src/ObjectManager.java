@@ -14,7 +14,7 @@ public class ObjectManager implements ActionListener{
 	}
 
 	void addPlatform() {
-		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(150)+100,25,100));
+		platforms.add(new Platform(MarioDupe.WIDTH,rand.nextInt(150)+140,25,100));
 	}
 	void update() {
 		
